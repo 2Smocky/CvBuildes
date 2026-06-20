@@ -1,167 +1,165 @@
-/* === Contenedor general === */
-.table-container {
-    background: #1e1e2f;
-    padding: 20px;
-    border-radius: 12px;
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+/* === Contenedor general Glassmorphism === */
+.logs-container {
+    background: rgba(17, 26, 31, 0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* === Título de sección === */
-.table-container h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    font-weight: 600;
+.loading-state {
+    color: #4dc0b5;
+    font-size: 18px;
+    text-align: center;
+    padding: 50px;
+    font-family: 'Voga', serif;
 }
 
 /* === Filtros === */
-.filters input,
-.filters select,
-.filters button {
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: none;
-    font-size: 0.95rem;
-    outline: none;
-    transition: 0.2s;
+.logs-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
 }
 
-.filters input,
-.filters select {
-    background: #242437;
-    color: #fff;
+.filter-group {
+    flex: 1;
+    min-width: 200px;
 }
 
-.filters input:focus,
-.filters select:focus {
-    background: #2e2e48;
-}
-
-.filters button {
-    background: #2d7df4;
-    color: #fff;
-    cursor: pointer;
-}
-
-.filters button:hover {
-    background: #1f63c2;
-}
-
-/* === Tabla === */
-.table-container table {
+.logs-filters input,
+.logs-filters select {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    border-radius: 12px;
-    overflow: hidden;
-    color: #fff;
-    background: #1e1e2f;
+    padding: 12px 18px;
+    border-radius: 50px;
+    background: rgba(26, 39, 46, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
-.table-container thead {
-    background: #2a2a40;
+.logs-filters input:focus,
+.logs-filters select:focus {
+    border-color: #4dc0b5;
+    box-shadow: 0 0 0 3px rgba(77, 192, 181, 0.2);
 }
 
-.table-container thead th {
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: left;
-    border-bottom: 1px solid #3a3a55;
+.filter-btn {
+    background: linear-gradient(135deg, #4dc0b5, #34d399);
+    color: #111a1f;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(77, 192, 181, 0.3);
 }
 
-.table-container tbody tr {
-    transition: background 0.2s ease;
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(77, 192, 181, 0.4);
 }
 
-.table-container tbody tr:nth-child(even) {
-    background: #242437;
+/* === Tabla Wrapper === */
+.logs-table-wrapper {
+    overflow-x: auto;
 }
 
-.table-container tbody tr:hover {
-    background: #2e2e48;
+/* === ID Badge === */
+.id-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #9ca3af;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 12px;
 }
 
-.table-container td {
-    padding: 14px;
-    font-size: 0.95rem;
-    border-bottom: 1px solid #2a2a40;
-}
-
-/* Mensaje sin resultados */
-.table-container td[colspan="4"] {
-    text-align: center;
-    color: #c7c7ff;
-}
-
-/* === Botones de paginación === */
-.table-container > div {
+/* === User Cell (Avatar + Text) === */
+.user-cell {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-.table-container > div button {
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: none;
-    background: #2d7df4;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.2s;
+.user-avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #374151, #1f2937);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.table-container > div button:hover:enabled {
-    background: #1f63c2;
+/* === Badges para Acciones === */
+.log-badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
 }
 
-.table-container > div button:disabled {
-    background: #3a3a55;
-    cursor: not-allowed;
+.badge-cyan {
+    background: rgba(77, 192, 181, 0.15);
+    color: #4dc0b5;
+    border: 1px solid rgba(77, 192, 181, 0.3);
 }
 
-/* ============================================================
-   === Responsive - Mobile (Tabla y filtros scrolleables)
-   ============================================================ */
+.badge-red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-purple {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.badge-gray {
+    background: rgba(156, 163, 175, 0.15);
+    color: #9ca3af;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+/* === Textos === */
+.log-details-text {
+    color: #d1d5db;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.log-date {
+    color: #9ca3af;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* === Responsive === */
 @media (max-width: 800px) {
-
-    /* Tabla scroll horizontal */
-    .table-container table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        border-radius: 8px;
-    }
-
-    .table-container td,
-    .table-container th {
-        padding: 10px;
-        font-size: 0.85rem;
-    }
-
-    /* Título más pequeño */
-    .table-container h2 {
-        font-size: 1.5rem;
-    }
-
-    /* === Filtros responsivos === */
-    .filters {
-        display: flex;
+    .logs-filters {
         flex-direction: column;
-        gap: 10px;
     }
-
-    .filters input,
-    .filters select,
-    .filters button {
-        font-size: 0.85rem;
-        padding: 8px 10px;
+    .filter-group, .filter-btn {
         width: 100%;
-    }
-
-    .filters button {
-        margin-top: 5px;
     }
 }
 

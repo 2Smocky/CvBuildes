@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { getToken } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 export default function PrivateRoute({ children }) {
-    const token = getToken();
+    const { currentUser } = useAuth();
 
-    if (!token) return <Navigate to="/login" />;
+    if (!currentUser) return <Navigate to="/login" />;
 
     return children;
 }

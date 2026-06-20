@@ -1,88 +1,80 @@
-import { getToken } from "./authService";
+import { db, auth } from "../firebase";
+import { collection, doc, addDoc, getDoc, getDocs, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 
-const API_URL = "http://127.0.0.1:8000/api/cv/drafts";
+const getDraftsCollection = () => collection(db, "cv_drafts");
+
+function checkAuth() {
+    const user = auth.currentUser;
+    if (!user) throw new Error("No estás autenticado");
+    return user;
+}
 
 export async function getDrafts() {
-    const res = await fetch(API_URL, {
-        headers: { 
-            "Authorization": `Bearer ${getToken()}`,
-            "Accept": "application/json"
-        }
-    });
-
-    if (!res.ok) throw new Error("Error al obtener borradores");
-    return await res.json();
+    const user = checkAuth();
+    const q = query(getDraftsCollection(), where("userId", "==", user.uid));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
 export async function saveDraft(titulo, data) {
     try {
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`,
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({ titulo, data }),
+        const user = checkAuth();
+        const docRef = await addDoc(getDraftsCollection(), {
+            userId: user.uid,
+            titulo: titulo || "Borrador sin título",
+            data: data,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
         });
-
-        if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "Error al guardar el borrador");
-        }
-
-        return await res.json();
+        return { id: docRef.id, titulo, data };
     } catch (error) {
-        // Captura errores de red o errores lanzados desde la respuesta
-        throw new Error(error.message || "No se pudo conectar con el servidor");
+        throw new Error(error.message || "Error al guardar el borrador");
     }
 }
 
 export async function updateDraft(id, data) {
     try {
-        const res = await fetch(`${API_URL}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`,
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({ data }),
+        checkAuth();
+        const draftRef = doc(db, "cv_drafts", id);
+        await updateDoc(draftRef, {
+            data: data,
+            updatedAt: new Date().toISOString()
         });
-
-        if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "Error al actualizar el borrador");
-        }
-
-        return await res.json();
+        return { message: "Borrador actualizado" };
     } catch (error) {
-        // Captura errores de red o errores lanzados desde la respuesta
-        throw new Error(error.message || "No se pudo conectar con el servidor");
+        throw new Error(error.message || "Error al actualizar el borrador");
     }
 }
 
 export async function getDraft(id) {
-    const res = await fetch(`${API_URL}/${id}`, {
-        headers: { 
-            "Authorization": `Bearer ${getToken()}`,
-            "Accept": "application/json"
-        }
-    });
-
-    if (!res.ok) throw new Error("Error al cargar borrador");
-    return await res.json();
+    checkAuth();
+    const draftRef = doc(db, "cv_drafts", id);
+    const draftSnap = await getDoc(draftRef);
+    if (!draftSnap.exists()) throw new Error("Borrador no encontrado");
+    return { id: draftSnap.id, ...draftSnap.data() };
 }
 
 export async function deleteDraft(id) {
-    const res = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE",
-        headers: { 
-            "Authorization": `Bearer ${getToken()}`,
-            "Accept": "application/json"
-        }
-    });
+    try {
+        checkAuth();
+        const draftRef = doc(db, "cv_drafts", id);
+        await deleteDoc(draftRef);
+        return { message: "Borrador eliminado" };
+    } catch (error) {
+        throw new Error("Error al eliminar borrador");
+    }
+}
 
-    if (!res.ok) throw new Error("Error al eliminar borrador");
-    return await res.json();
+export async function renameDraft(id, newTitle) {
+    try {
+        checkAuth();
+        const draftRef = doc(db, "cv_drafts", id);
+        await updateDoc(draftRef, {
+            titulo: newTitle,
+            updatedAt: new Date().toISOString()
+        });
+        return { message: "Nombre de borrador actualizado" };
+    } catch (error) {
+        throw new Error("Error al renombrar el borrador");
+    }
 }

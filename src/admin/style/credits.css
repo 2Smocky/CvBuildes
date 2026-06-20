@@ -1,58 +1,87 @@
 /* === Título de sección === */
 .title-seccion-admin {
-    font-size: 1.8rem;
+    font-family: 'Voga', serif;
+    font-size: 34px;
     font-weight: 600;
-    color: #000;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
 }
 
-/* === Contenedor general === */
-.credits-box {
-    background: #1e1e2f;
-    padding: 20px;
-    border-radius: 12px;
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    max-width: 100%;
+/* === Layout de dos columnas === */
+.credits-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+    align-items: start;
 }
 
-/* === Inputs === */
-.credits-box input,
-.credits-box select {
+/* === Paneles Glassmorphism === */
+.credits-panel {
+    background: rgba(17, 26, 31, 0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.credits-panel h3 {
+    font-family: 'Voga', serif;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* === Inputs Generales === */
+.credits-input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    background: #242437;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 1rem;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    background: rgba(26, 39, 46, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 14px;
     outline: none;
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 
-.credits-box input:focus,
-.credits-box select:focus {
-    background: #2e2e48;
+.credits-input:focus {
+    border-color: #4dc0b5;
+    box-shadow: 0 0 0 3px rgba(77, 192, 181, 0.2);
+}
+
+.large-number {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+    border-radius: 12px;
 }
 
 /* === Lista de usuarios === */
 .user-list {
-    max-height: 180px;
+    max-height: 400px;
     overflow-y: auto;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    background: #242437;
-    border: 1px solid #2a2a40;
+    border-radius: 12px;
+    background: rgba(17, 26, 31, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 0;
     list-style: none;
 }
 
 .user-list li {
-    padding: 10px 12px;
-    border-bottom: 1px solid #2a2a40;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .user-list li:last-child {
@@ -60,46 +89,203 @@
 }
 
 .user-list li:hover {
-    background: #2e2e48;
+    background: rgba(77, 192, 181, 0.05);
 }
 
 .user-list li.selected {
-    background: #3a3a55;
+    background: rgba(77, 192, 181, 0.15);
+    border-left: 4px solid #4dc0b5;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-name {
+    color: #ffffff;
     font-weight: 600;
+    font-size: 14px;
 }
 
-/* Usuario seleccionado */
-.selected-user {
-    margin-bottom: 12px;
-    font-size: 1rem;
-    color: #c7c7ff;
+.user-email {
+    color: #9ca3af;
+    font-size: 12px;
 }
 
-/* === Botón principal === */
-.credits-box button {
-    width: 100%;
-    padding: 12px;
-    background: #2d7df4;
-    color: #fff;
+.user-credits-badge {
+    background: rgba(77, 192, 181, 0.2);
+    color: #4dc0b5;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.no-results {
+    color: #9ca3af;
+    text-align: center;
+    padding: 20px !important;
+    font-size: 14px;
+}
+
+/* === Tarjeta de usuario seleccionado (Right Panel) === */
+.selected-user-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(26, 39, 46, 0.6);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.avatar-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4dc0b5, #1f63c2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.selected-user-card .details h4 {
+    color: #ffffff;
+    font-size: 18px;
+    margin: 0 0 5px 0;
+}
+
+.selected-user-card .details p {
+    color: #9ca3af;
+    font-size: 13px;
+    margin: 0 0 10px 0;
+}
+
+.current-credits {
+    font-size: 13px;
+    color: #e5e7eb;
+    background: rgba(0,0,0,0.3);
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.current-credits strong {
+    color: #4dc0b5;
+    font-size: 15px;
+}
+
+/* === Formulario de Acción === */
+.action-form label {
+    display: block;
+    color: #9ca3af;
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* === Segmented Control (Botones de acción) === */
+.segmented-control {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 30px;
+}
+
+.segmented-control button {
+    flex: 1;
+    background: transparent;
     border: none;
+    color: #9ca3af;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
     border-radius: 8px;
-    font-size: 1rem;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.3s ease;
 }
 
-.credits-box button:hover {
-    background: #1f63c2;
+.segmented-control button:hover {
+    color: #ffffff;
+}
+
+.segmented-control button.active {
+    background: #4dc0b5;
+    color: #111a1f;
+    box-shadow: 0 4px 10px rgba(77, 192, 181, 0.3);
+}
+
+/* === Botón Principal Submit === */
+.submit-credits-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #4dc0b5, #34d399);
+    color: #111a1f;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 15px rgba(77, 192, 181, 0.3);
+}
+
+.submit-credits-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(77, 192, 181, 0.4);
+}
+
+/* === Estado Vacío === */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* === Scrollbar === */
+.user-list::-webkit-scrollbar {
+    width: 8px;
+}
+.user-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+.user-list::-webkit-scrollbar-thumb {
+    background: rgba(77, 192, 181, 0.3);
+    border-radius: 4px;
 }
 
 /* === Responsive === */
-@media (max-width: 600px) {
-    .credits-box {
-        padding: 15px;
+@media (max-width: 1024px) {
+    .credits-layout {
+        grid-template-columns: 1fr;
     }
-
-    .credits-box input,
-    .credits-box select {
-        padding: 10px;
+    .user-list {
+        max-height: 300px;
     }
 }

@@ -1,131 +1,128 @@
-/* === Sidebar Admin - Lateral (Versión Fija - Desktop) === */
+/* Layout del Panel Completo */
+.admin-panel-layout {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    position: relative;
+    z-index: 1;
+}
+
+/* Sidebar Glassmorphism */
 .admin-sidebar {
-    width: 230px;
-    background: #1e1e2f;
-    padding: 25px 20px;
-    color: #fff;
-    font-family: "Inter", sans-serif;
+    width: 250px;
+    background: rgba(17, 26, 31, 0.6);
+    backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    border-right: 2px solid #2a2a40;
-    justify-content: flex-start;
+    padding: 20px 0;
+    transition: 0.3s ease;
+    z-index: 10;
 }
 
 .admin-sidebar .logo {
-    margin-bottom: 20px;
-    border-bottom: 2px solid #404057;
-    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 40px;
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .admin-sidebar .logo h2 {
-    font-size: 1.8rem;
+    display: none;
+}
+
+.sidebar-logo-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 
 .admin-sidebar .logo span {
-    font-size: 1.1rem;
-    color: #e4e4e4;
-}
-
-.admin-sidebar button {
-    width: 100%;
-    padding: 12px;
-    background: #2a2a40;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.admin-sidebar button:hover {
-    background: #3a3a55;
-}
-
-/* Logout al fondo */
-.admin-sidebar button.logout-btn {
-    margin-top: auto;
-    background: #c0392b;
-    text-align: center;
-}
-.admin-sidebar button.logout-btn:hover {
-    background: #a12920;
-}
-
-/* === Contenido === */
-.admin-content {
-    margin-left: 230px;
-    padding: 20px;
-}
-
-/* Botón hamburguesa (oculto en desktop) */
-.hamburger-btn {
-    display: none;
+    color: #4dc0b5;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
 }
 
 .menu-items {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    flex-grow: 1; /*
-     Hace que ocupe todo el espacio vertical */
+    gap: 5px;
+    padding: 0 15px;
+    flex: 1;
 }
 
-/* ============================================================
-        === Mobile — Sidebar compacto + menú desplegable ===
-   ============================================================ */
+.menu-items button {
+    background: transparent;
+    color: #9ca3af;
+    border: none;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.menu-items button:hover {
+    background: rgba(77, 192, 181, 0.1);
+    color: #4dc0b5;
+    transform: translateX(5px);
+}
+
+.menu-items button.active {
+    background: rgba(77, 192, 181, 0.15);
+    color: #4dc0b5;
+    border-left: 4px solid #4dc0b5;
+    border-radius: 4px 8px 8px 4px;
+    font-weight: 700;
+}
+
+.logout-btn {
+    margin-top: auto;
+    color: #ef4444 !important;
+}
+
+.logout-btn:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #f87171 !important;
+}
+
+/* Área de contenido */
+.admin-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Hamburguesa en móvil */
+.hamburger-btn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    background: #111a1f;
+    color: #4dc0b5;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 @media (max-width: 800px) {
-
-    /* Sidebar pasa arriba */
-    .admin-sidebar {
-        width: 100%;
-        height: auto;
-        padding: 12px 15px;
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: #1e1e2f;
-        z-index: 40;
-        border-bottom: 2px solid #2a2a40;
-    }
-
-    .admin-sidebar .logo {
-        margin-bottom: 0;
-        border-bottom: none;
-    }
-
-    /* Contenedor de botones escondido */
-    .menu-items {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
-        padding-top: 12px;
-        border-top: 1px solid #404057;
-    }
-
-    /* Menú abierto */
-    .menu-items.open {
-        display: flex;
-    }
-
-    /* Botones */
-    .admin-sidebar button {
-        width: 100%;
-        white-space: nowrap;
-        padding: 10px 12px;
-        font-size: 0.9rem;
-        border-radius: 6px;
-        text-align: left;
-    }
-
 
     /* Botón hamburguesa */
     .hamburger-btn {

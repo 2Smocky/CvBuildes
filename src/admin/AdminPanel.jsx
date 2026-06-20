@@ -10,14 +10,14 @@ export default function AdminPanel() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <>
+        <div className="admin-page-wrapper admin-panel-layout">
             {/* Botón hamburguesa (solo móvil) */}
             <button className="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)}>
                 ☰
             </button>
 
-            {/* Sidebar */}
             <SidebarAdmin
+                section={section}
                 setSection={setSection}
                 menuOpen={menuOpen}
                 setMenuOpen={setMenuOpen}
@@ -32,6 +32,6 @@ export default function AdminPanel() {
                 {section === "credits" && <AddCredits />}
                 {section === "logs" && <LogsTable />}
             </div>
-        </>
+        </div>
     );
 }

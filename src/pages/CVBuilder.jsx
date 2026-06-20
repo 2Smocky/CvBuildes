@@ -3,6 +3,7 @@ import { useDraft } from "../hooks/useDraft";
 import CVPreview from '../components/CVPreview';
 import initialData from '../data/initialData';
 import ThemePanel from '../components/ThemePanel';
+import OnboardingTour from '../components/OnboardingTour';
 import "./styles/CVBuilder.css";
 import "../App.css";
 
@@ -27,6 +28,7 @@ function App() {
         saveDraft,
         loadDraft,
         deleteDraft,
+        renameDraft,
         resetDraftId
     } = useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme, setHasUnsavedChanges);
 
@@ -165,6 +167,7 @@ function App() {
 
     return (
         <div className="app-layout">
+            <OnboardingTour />
             <main>
                 <ThemePanel
                     onThemeChange={handleThemeChange}
@@ -185,6 +188,7 @@ function App() {
                     draftList={draftList}
                     onLoadDraft={handleLoadDraft}
                     onDeleteDraft={deleteDraft}
+                    onRenameDraft={renameDraft}
 
                     onResetCV={handleResetCV}
                     resetDraftId={resetDraftId}

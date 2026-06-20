@@ -1,24 +1,22 @@
-import { getToken } from "./authService";
-
-const API_URL = "http://127.0.0.1:8000/api";
+import { db, auth } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export async function getCredits() {
-    const token = getToken();
-    if (!token) {
+    const user = auth.currentUser;
+    if (!user) {
         throw new Error("No estás autenticado. Por favor, inicia sesión.");
     }
 
-    const res = await fetch(`${API_URL}/credits`, {
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/json"
+    try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        
+        if (!userSnap.exists()) {
+            throw new Error("Usuario no encontrado en la base de datos.");
         }
-    });
 
-    if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "No se pudo obtener tu balance de créditos.");
+        return { credits: userSnap.data().credits || 0 };
+    } catch (error) {
+        throw new Error(error.message || "No se pudo obtener tu balance de créditos.");
     }
-
-    return await res.json();
 }

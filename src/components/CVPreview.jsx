@@ -4,6 +4,9 @@ import html2canvas from "html2canvas";
 import Swal from "sweetalert2";
 import { downloadCV } from '../services/cvService';
 import { getCredits } from "../services/userService";
+import DraftsModal from "./DraftsModal";
+import logoImg from '../assets/logo.png';
+import { startTour } from './OnboardingTour';
 
 // --- Componente rehusable para Botones de Acción (Añadir/Eliminar) ---
 const handleDownloadPDF = async () => {
@@ -202,7 +205,7 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
         </div>
 
         {/* Habilidades (Soft Skills) - Completa edición */}
-        <div className="section">
+        <div className={`section ${habilidades.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h3>Habilidades</h3>
             {habilidades.map((habilidad) => (
                 <div key={habilidad.id} className="contact-item editable-list-item" style={{ position: 'relative', paddingRight: '30px', marginBottom: '8px' }}>
@@ -221,7 +224,7 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
         </div>
 
         {/* Lenguajes (Technical Skills) - Progreso Movible y Nombre Editable */}
-        <div className="section">
+        <div className={`section ${lenguajes.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h3>Lenguajes</h3>
             {lenguajes.map((lang) => (
                 <div key={lang.id} className="skill-item" style={{ position: 'relative' }}>
@@ -246,7 +249,7 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
         </div>
 
         {/* Idiomas - Progreso Movible y Nombre Editable */}
-        <div className="section">
+        <div className={`section ${idiomas.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h3>Idiomas</h3>
             {idiomas.map((idioma) => (
                 <div key={idioma.id} className="skill-item" style={{ position: 'relative' }}>
@@ -271,7 +274,7 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
         </div>
 
         {/* ===================== REDES SOCIALES ===================== */}
-        <div className="section">
+        <div className={`section ${redes.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h3>Redes Sociales</h3>
 
             {redes.map(r => (
@@ -348,7 +351,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
         </div>
 
         {/* Formación Académica */}
-        <div className="main-section">
+        <div className={`main-section ${formacion.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h2>Formación Académica</h2>
             {formacion.map(edu => (
                 <div key={edu.id} className="education-item" style={{ position: 'relative', paddingRight: '30px', marginBottom: '15px' }}>
@@ -363,8 +366,8 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
             <ActionButton onClick={() => onAddItem('educacion_academica')} title="Añadir nueva formación" label="+ Añadir Formación" isAdd={true} />
         </div>
 
-        {/* Formación Académica */}
-        <div className="main-section">
+        {/* Formación Complementaria */}
+        <div className={`main-section ${formacion_complementaria.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h2>Formación Complementaria</h2>
             {formacion_complementaria.map(edu => (
                 <div key={edu.id} className="education-item" style={{ position: 'relative', paddingRight: '30px', marginBottom: '15px' }}>
@@ -379,7 +382,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
         </div>
 
         {/* Experiencia Laboral */}
-        <div className="main-section">
+        <div className={`main-section ${experiencia.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h2>Experiencia Laboral</h2>
             {experiencia.map(exp => (
                 <div key={exp.id} className="experience-item" style={{ position: 'relative', paddingRight: '30px', marginBottom: '15px' }}>
@@ -395,7 +398,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
         </div>
 
         {/* Proyectos Destacados (NUEVO) */}
-        <div className="main-section">
+        <div className={`main-section ${proyectos.length === 0 ? 'no-print empty-section-warning' : ''}`}>
             <h2>Proyectos Destacados</h2>
             {proyectos.map(proj => (
                 <div key={proj.id} className="experience-item" style={{ position: 'relative', paddingRight: '30px', marginBottom: '15px' }}>
@@ -411,7 +414,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
         </div>
 
         {/* Referencias (NUEVO) */}
-        <div className="main-section references-section">
+        <div className={`main-section references-section ${(referencias.personales.length === 0 && referencias.laborales.length === 0) ? 'no-print empty-section-warning' : ''}`}>
             <h2>Referencias</h2>
 
             {/* Referencias Personales */}
@@ -556,7 +559,9 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
 
 
 // --- Componente Principal CVPreview ---
-function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft, hasUnsavedChanges }) {
+function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft, hasUnsavedChanges, draftList, onDeleteDraft, onRenameDraft }) {
+    const [isDraftsModalOpen, setIsDraftsModalOpen] = React.useState(false);
+    const [animateLogo, setAnimateLogo] = React.useState(false);
 
     const { personal, contacto, habilidades, lenguajes, idiomas, perfil, experiencia, educacion_academica, educacion_complementaria, proyectos, referencias } = cvData;
 
@@ -577,13 +582,37 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
 
     return (
         <>
+            <DraftsModal 
+                isOpen={isDraftsModalOpen}
+                onClose={() => setIsDraftsModalOpen(false)}
+                drafts={draftList || []}
+                onLoadDraft={onLoadDraft}
+                onDeleteDraft={onDeleteDraft}
+                onRenameDraft={onRenameDraft}
+                setActiveDraft={setActiveDraft}
+            />
             <div className="cv-actions">
 
-                <div className="izq">
-
-                    <button
-                        className="btn-new btn no-print"
+                <div className="izq" style={{ display: 'flex', alignItems: 'center' }}>
+                    <img 
+                        src={logoImg} 
+                        alt="CV Builders" 
+                        id="tour-logo"
+                        style={{ height: '45px', marginRight: '25px', objectFit: 'contain', cursor: 'pointer', mixBlendMode: 'multiply' }} 
+                        className={`no-print ${animateLogo ? 'logo-animate' : ''}`}
                         onClick={() => {
+                            if (!animateLogo) {
+                                setAnimateLogo(true);
+                                setTimeout(() => setAnimateLogo(false), 800);
+                            }
+                        }}
+                    />
+
+                    <div className="action-wrapper">
+                        <button
+                            id="tour-reset"
+                            className="btn-new btn no-print"
+                            onClick={() => {
                             Swal.fire({
                                 title: "¿Restaurar CV?",
                                 text: "Todos los campos volverán a sus valores predeterminados.",
@@ -602,10 +631,14 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                     >
                         <img src="/src/assets/new.png" alt="" />
                     </button>
+                    <span className="tooltip">Empezar desde cero</span>
+                    </div>
 
-                    <button
-                        className="btn-download btn"
-                        onClick={() => {
+                    <div className="action-wrapper">
+                        <button
+                            id="tour-export"
+                            className="btn-download btn"
+                            onClick={() => {
                             Swal.fire({
                                 title: '¿Estás seguro?',
                                 text: "Se descontará un crédito de tu cuenta para descargar el CV.",
@@ -622,91 +655,47 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                             })
                         }}
                     >
-                        Descargar CV
+                        Exportar PDF
                     </button>
+                    <span className="tooltip">Generar PDF</span>
+                    </div>
 
-                    <button className="btn-save btn" onClick={onSaveDraft}>
-                        Guardar borrador
-                    </button>
+                    <div className="action-wrapper">
+                        <button 
+                            id="tour-save" 
+                            className="btn-save btn" 
+                            onClick={onSaveDraft}
+                        >
+                            Guardar
+                        </button>
+                        <span className="tooltip">Guardar progreso</span>
+                    </div>
 
-                    <button
-                        className="btn-restore btn"
-                        onClick={async () => {
+                    <div className="action-wrapper">
+                        <button
+                            id="tour-drafts"
+                            className="btn-restore btn"
+                            onClick={async () => {
                             Swal.fire({
                                 title: "Cargando borradores...",
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                },
+                                didOpen: () => Swal.showLoading(),
                                 allowOutsideClick: false,
-                                allowEscapeKey: false,
                             });
-                            try {
-                                const drafts = await onOpenDrafts();
-
-                                if (!drafts || drafts.length === 0) {
-                                    Swal.fire({
-                                        icon: "info",
-                                        title: "Sin borradores",
-                                        text: "No tienes borradores guardados aún."
-                                    });
-                                    return;
-                                }
-
-                                Swal.fire({
-                                    title: 'Selecciona un borrador',
-                                    input: 'select',
-                                    inputOptions: drafts.reduce((acc, draft) => {
-                                        acc[draft.id] = draft.titulo || `Borrador #${draft.id}`;
-                                        return acc;
-                                    }, {}),
-                                    inputPlaceholder: 'Elige un borrador',
-                                    showCancelButton: true,
-                                }).then(async (result) => {
-                                    if (result.value) {
-                                        const draftId = result.value;
-                                        const selectedDraft = drafts.find(d => d.id == draftId);
-                                        
-                                        Swal.fire({
-                                            title: "Cargando borrador...",
-                                            didOpen: () => {
-                                                Swal.showLoading();
-                                            },
-                                            allowOutsideClick: false,
-                                            allowEscapeKey: false,
-                                            allowEnterKey: false,
-                                        });
-
-                                        try {
-                                            if (selectedDraft) {
-                                                setActiveDraft(selectedDraft.titulo || `Borrador #${selectedDraft.id}`);
-                                            }
-                                            await onLoadDraft(draftId);
-                                            Swal.close(); // Cierra el loading
-                                        } catch {
-                                            Swal.fire("Error", "No se pudo cargar el borrador.", "error");
-                                        }
-                                    }
-                                });
-                            } finally {
-                                // No es necesario cerrar Swal aquí, el siguiente Swal lo reemplazará
-                            }
+                            await onOpenDrafts();
+                            Swal.close();
+                            setIsDraftsModalOpen(true);
                         }}
                     >
-                        Restaurar borrador
+                        Drafts
                     </button>
+                    <span className="tooltip">Ver borradores</span>
+                    </div>
 
                     {activeDraftName && (
-                        <div style={{
-                            backgroundColor: 'transparent',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px',
-                            color: '#E69500',
-                            height: '100%'
-                        }}>
-                            <span style={{ fontSize: '1.2em' }}>&#x2139;</span>
+                        <div className="active-draft-message">
+                            <span style={{ fontSize: '1.1em', marginRight: '5px' }}>&#x2139;</span>
                             <span>
-                                Borrador activo: <strong style={{ fontWeight: 'bold' }}>{activeDraftName}</strong>
+                                Editando: <strong>{activeDraftName}</strong>
                             </span>
                         </div>
                     )}
@@ -716,17 +705,35 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                 </div>
 
 
-                <div className="der">
-                    <button
-                        className="btn-buy-credits btn"
-                        onClick={handleBuyCredits}
-                        style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
-                    >
-                        <img src="/src/assets/credits.png" alt="creditos" />
-                    </button>
-                    <button
-                        className="btn-logout btn"
-                        onClick={() => {
+                <div className="der" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="action-wrapper">
+                        <button
+                            className="btn-info btn no-print"
+                            onClick={startTour}
+                        >
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                            </svg>
+                        </button>
+                        <span className="tooltip">Ver tutorial</span>
+                    </div>
+
+                    <div className="action-wrapper">
+                        <button
+                            id="tour-credits"
+                            className="btn-buy-credits btn"
+                            onClick={handleBuyCredits}
+                            style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+                        >
+                            <img src="/src/assets/credits.png" alt="creditos" />
+                        </button>
+                        <span className="tooltip">Comprar créditos</span>
+                    </div>
+
+                    <div className="action-wrapper">
+                        <button
+                            className="btn-logout btn"
+                            onClick={() => {
                             if (hasUnsavedChanges) {
                                 Swal.fire({
                                     title: "¿Tienes cambios sin guardar?",
@@ -769,8 +776,10 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                             }
                         }}
                     >
-                        Cerrar sesión
+                        Salir
                     </button>
+                    <span className="tooltip">Cerrar sesión</span>
+                    </div>
                 </div>
 
             </div>

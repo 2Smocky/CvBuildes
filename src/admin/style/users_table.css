@@ -1,115 +1,250 @@
 /* === Contenedor general === */
 .title-seccion-admin {
-    font-size: 1.8rem;
+    font-family: 'Voga', serif;
+    font-size: 34px;
     font-weight: 600;
-    color: #000000;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.users-table-container {
+    overflow-x: auto;
+    background: rgba(17, 26, 31, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 10px;
 }
 
 /* === Tabla general === */
 .admin-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Adds vertical space between rows */
     font-family: "Inter", sans-serif;
-    background: #1e1e2f;
-    border-radius: 12px;
-    overflow: hidden;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    color: #e5e7eb;
 }
 
 /* === Encabezados === */
-.admin-table thead {
-    background: #2a2a40;
-}
-
 .admin-table thead th {
-    padding: 14px;
-    font-size: 1rem;
+    padding: 12px 20px;
+    font-size: 12px;
     font-weight: 600;
     text-align: left;
-    border-bottom: 1px solid #3a3a55;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-table th.center-col, 
+.admin-table td.center-col {
+    text-align: center;
 }
 
 /* === Filas === */
 .admin-table tbody tr {
-    transition: background 0.2s ease;
-}
-
-.admin-table tbody tr:nth-child(even) {
-    background: #242437;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .admin-table tbody tr:hover {
-    background: #2e2e48;
+    background: rgba(77, 192, 181, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.admin-table tbody tr.row-blocked {
+    opacity: 0.6;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.admin-table tbody tr.row-blocked:hover {
+    opacity: 0.9;
 }
 
 /* === Celdas === */
 .admin-table td {
-    padding: 14px;
-    font-size: 0.95rem;
-    border-bottom: 1px solid #2a2a40;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #d1d5db;
+    border-top: 1px solid rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.02);
 }
 
-/* === Botones === */
-.admin-table button {
-    background: #2d7df4;
-    color: #fff;
-    border: none;
-    padding: 7px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
+.admin-table td:first-child {
+    border-left: 1px solid rgba(255,255,255,0.02);
+    border-radius: 12px 0 0 12px;
+}
+
+.admin-table td:last-child {
+    border-right: 1px solid rgba(255,255,255,0.02);
+    border-radius: 0 12px 12px 0;
+}
+
+/* === User Cell (Avatar + Text) === */
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4dc0b5, #1f63c2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.user-info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-name {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.user-email {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+/* === Utilities === */
+.text-gray {
+    color: #9ca3af;
+}
+
+.credit-badge {
+    background: rgba(255,255,255,0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* === Badges === */
+.status-badge, .role-badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.badge-active {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.badge-blocked {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-admin {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-user {
+    background: rgba(255, 255, 255, 0.05);
+    color: #9ca3af;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === Action Buttons === */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-    margin-right: 8px;
-    transition: 0.2s;
+    transition: all 0.3s ease;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.admin-table button:hover {
-    background: #1f63c2;
+.btn-block {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
 }
 
-.admin-table button:nth-child(1) {
-    background: #4b2bc0; /* Bloquear */
-    width: 80px;
+.btn-block:hover {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
 }
 
-.admin-table button:nth-child(1):hover {
-    background: #4720a1;
+.btn-activate {
+    background: rgba(52, 211, 153, 0.1);
+    color: #34d399;
 }
 
-/* Botón Editar */
-.admin-table button:nth-child(2) {
-    background: #b99729;
+.btn-activate:hover {
+    background: #34d399;
+    color: #111a1f;
+    box-shadow: 0 4px 10px rgba(52, 211, 153, 0.3);
 }
 
-.admin-table button:nth-child(2):hover {
-    background: #917c1e;
+.btn-role {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
 }
 
+.btn-role:hover {
+    background: #f59e0b;
+    color: #111a1f;
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
 
-/* ============================================================
-   === Responsive - Mobile (Tabla scrolleable horizontalmente)
-   ============================================================ */
+.no-data {
+    text-align: center;
+    padding: 30px !important;
+    color: #9ca3af !important;
+}
+
+/* === Responsive - Mobile === */
+@media (max-width: 1024px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
 @media (max-width: 800px) {
+    .users-table-container {
+        padding: 0;
+    }
+    
     .admin-table {
-        display: block;
-        overflow-x: auto;
         white-space: nowrap;
-        border-radius: 8px;
     }
 
-    .admin-table td,
-    .admin-table th {
-        padding: 10px;
-        font-size: 0.85rem;
-    }
-
-    .admin-table button {
-        padding: 6px 10px;
-        font-size: 0.75rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
+    .title-seccion-admin {
+        font-size: 26px;
     }
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getDrafts, getDraft, saveDraft, updateDraft, deleteDraft } from "../services/draftService";
+import { getDrafts, getDraft, saveDraft, updateDraft, deleteDraft, renameDraft } from "../services/draftService";
 import Swal from "sweetalert2";
 
 export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme, setHasUnsavedChanges) {
@@ -31,12 +31,23 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
             }
         }
 
+        if (draftList.length >= 10) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Límite alcanzado',
+                text: 'Solo puedes tener un máximo de 10 borradores. Por favor, elimina uno antes de guardar otro nuevo.'
+            });
+            return;
+        }
+
         const { value: titulo, isConfirmed } = await Swal.fire({
             title: "Guardar borrador",
             input: "text",
             inputLabel: "Nombre del borrador",
             inputPlaceholder: "Ej: Hoja de vida versión 1",
             showCancelButton: true,
+            confirmButtonText: "Guardar",
+            cancelButtonText: "Cancelar",
         });
 
         if (isConfirmed && titulo) {
@@ -52,8 +63,8 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
             try {
                 const res = await saveDraft(titulo, { content: cvData, theme, customTheme });
 
-                if (res?.draft?.id) {
-                    setCurrentDraftId(res.draft.id);
+                if (res?.id) {
+                    setCurrentDraftId(res.id);
                     setHasUnsavedChanges(false);
                     Swal.fire("Guardado", "El borrador se guardó exitosamente.", "success");
                     loadDrafts();
@@ -103,6 +114,15 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
         setCurrentDraftId(null);
     };
 
+    const handleRename = async (id, newTitle) => {
+        try {
+            await renameDraft(id, newTitle);
+            loadDrafts(); // Refrescar la lista silenciosamente
+        } catch (error) {
+            Swal.fire("Error", "No se pudo renombrar el borrador.", "error");
+        }
+    };
+
     return {
         draftList,
         currentDraftId,
@@ -110,6 +130,7 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
         saveDraft: handleSave,
         loadDraft: handleLoad,
         deleteDraft: handleDelete,
+        renameDraft: handleRename,
         setCurrentDraftId,
         resetDraftId,
     };

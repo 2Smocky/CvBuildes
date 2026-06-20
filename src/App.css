@@ -43,110 +43,92 @@
 
 /* 🍂 Tema Tierra y Dorado (Cálido y Sofisticado) */
 .theme-earth {
+    --primary-color: #d35400;
     --sidebar-text-color: #ffffff;
-    --primary-color: #ff7418;
-    /* Naranja Quemado/Terracota */
     --accent-gradient: linear-gradient(90deg, #d35400, #f1c40f);
-    /* Transición a Amarillo Dorado */
-    --sidebar-bg: #b1590d;
-    /* Naranja más intenso para el fondo */
-    --text-color-dark: #b1590d;
-    /* Un Rojo ladrillo para el texto principal */
+    --sidebar-bg: #873600; /* Darker background */
+    --text-color-dark: #873600; 
 }
 
 /* 💎 Tema Turquesa Zafiro (Fresco y Tecnológico) */
 .theme-sapphire {
+    --primary-color: #16a085;
     --sidebar-text-color: #ffffff;
-    --primary-color: #15cca7;
-    /* Turquesa (Seafoam Green) */
     --accent-gradient: linear-gradient(90deg, #1abc9c, #3498db);
-    /* Transición a Azul Zafiro */
-    --sidebar-bg: #097a64;
-    /* Turquesa más oscuro para el fondo */
-    --text-color-dark: #16a085;
+    --sidebar-bg: #0e6655; /* Darker background */
+    --text-color-dark: #0e6655;
 }
 
 /* 🍑 Tema Melocotón Pastel (Suave y Amigable) */
 .theme-peach {
-    --sidebar-text-color: #ffffff;
-    --primary-color: #6d4e3f;
-    /* Melocotón/Salmón Pastel */
+    --primary-color: #e67e22;
+    --sidebar-text-color: #5d4037; /* Dark text for light background */
     --accent-gradient: linear-gradient(90deg, #ffb794, #ff8c64);
-    /* Degradado más sutil */
-    --sidebar-bg: #9c846a;
-    /* Beige rosado muy claro para el fondo */
-    --text-color-dark: #ad9378;
-    /* Color de texto en Terracota suave */
+    --sidebar-bg: #fdebd0; /* Very light background */
+    --text-color-dark: #ba4a00;
 }
 
 /* ⚙️ Tema Gris Carbón (Industrial y De Alto Contraste) */
 .theme-charcoal {
+    --primary-color: #c0392b;
     --sidebar-text-color: #ffffff;
-    --primary-color: #df5343ff;
-    /* Rojo Ladrillo/Alerta para destacar */
-    --accent-gradient: linear-gradient(90deg, #5c5c5c, #df5343ff);
-    /* Degradado de gris a rojo */
-    --sidebar-bg: #474646;
-    /* Gris oscuro casi negro para el fondo */
-    --text-color-dark: #1a1a1a;
-    /* Negro puro para el texto principal */
+    --accent-gradient: linear-gradient(90deg, #5c5c5c, #c0392b);
+    --sidebar-bg: #2c3e50; 
+    --text-color-dark: #2c3e50;
 }
-
-
-
 
 /* 🌌 Tema Noche Estelar (Oscuro y Elegante) */
 .theme-night {
+    --primary-color: #8e44ad;
     --sidebar-text-color: #ffffff;
-    --primary-color: #8e44ad; /* Púrpura profundo */
-    --accent-gradient: linear-gradient(90deg, #8e44ad, #2980b9); /* De púrpura a azul */
-    --sidebar-bg: #2c3e50; /* Fondo oscuro */
-    --text-color-dark: #ecf0f1; /* Texto claro */
+    --accent-gradient: linear-gradient(90deg, #8e44ad, #2980b9); 
+    --sidebar-bg: #17202a; /* Deeper dark */
+    --text-color-dark: #17202a; 
 }
 
 /* 🌊 Tema Océano Profundo (Azul Marino y Agua) */
 .theme-ocean {
+    --primary-color: #1f618d;
     --sidebar-text-color: #ffffff;
-    --primary-color: #468bb9; /* Azul intenso */
-    --accent-gradient: linear-gradient(90deg, #1f618d, #48c9b0); /* Azul a turquesa */
-    --sidebar-bg: #154360; /* Azul muy oscuro para sidebar */
-    --text-color-dark: #1f618d; /* Texto azul oscuro */
+    --accent-gradient: linear-gradient(90deg, #1f618d, #48c9b0); 
+    --sidebar-bg: #154360; 
+    --text-color-dark: #154360; 
 }
 
 /* 🌸 Tema Sakura (Rosa Suave y Pastel) */
 .theme-sakura {
-    --sidebar-text-color: #ffffff;
-    --primary-color: #ff00aa; 
-    --accent-gradient: linear-gradient(90deg, #9e095b, #ff00aa);
-    --sidebar-bg: #9e095b; 
-    --text-color-dark: #9e095b; 
+    --primary-color: #d81b60; 
+    --sidebar-text-color: #4a235a; /* Dark text for light pink */
+    --accent-gradient: linear-gradient(90deg, #f48fb1, #f06292);
+    --sidebar-bg: #fce4ec; /* Light pink background */
+    --text-color-dark: #880e4f; 
 }
 
 /* 🌿 Tema Bosque (Verde Natural) */
 .theme-forest {
+    --primary-color: #27ae60;
     --sidebar-text-color: #ffffff;
-    --primary-color: #10b655; /* Verde bosque */
-    --accent-gradient: linear-gradient(90deg, #145a32, #27ae60); /* De verde oscuro a brillante */
-    --sidebar-bg: #145a32; /* Fondo profundo */
-    --text-color-dark: #145a32; /* Texto verde oscuro */
+    --accent-gradient: linear-gradient(90deg, #145a32, #27ae60); 
+    --sidebar-bg: #145a32; 
+    --text-color-dark: #145a32; 
 }
 
 /* 🔥 Tema Fuego (Intenso y Llamativo) */
 .theme-fire {
+    --primary-color: #c0392b; 
     --sidebar-text-color: #ffffff;
-    --primary-color: #e74c3c; /* Rojo intenso */
-    --accent-gradient: linear-gradient(90deg, #e74c3c, #f39c12); /* De rojo a naranja */
-    --sidebar-bg: #943126; /* Fondo rojo oscuro */
-    --text-color-dark: #641e16; /* Texto marrón rojizo */
+    --accent-gradient: linear-gradient(90deg, #e74c3c, #f39c12); 
+    --sidebar-bg: #7b241c; 
+    --text-color-dark: #7b241c; 
 }
 
 /* 🌟 Tema Oro y Marfil (Clásico y Sofisticado) */
 .theme-gold {
-    --sidebar-text-color: #ffffff;
-    --primary-color: #f1c40f; /* Dorado brillante */
-    --accent-gradient: linear-gradient(90deg, #f39c12, #f1c40f); /* De naranja dorado a dorado */
-    --sidebar-bg: #7d6608; /* Fondo dorado oscuro */
-    --text-color-dark: #7d6608; /* Texto dorado oscuro */
+    --primary-color: #b9770e; 
+    --sidebar-text-color: #4d5656; /* Dark text for light ivory */
+    --accent-gradient: linear-gradient(90deg, #f1c40f, #d4ac0d); 
+    --sidebar-bg: #fef9e7; /* Light ivory background */
+    --text-color-dark: #7d6608; 
 }
 
 .theme-custom {
