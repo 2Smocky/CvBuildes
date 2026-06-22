@@ -6,7 +6,20 @@ import { downloadCV } from '../services/cvService';
 import { getCredits } from "../services/userService";
 import DraftsModal from "./DraftsModal";
 import logoImg from '../assets/logo.png';
+import newIcon from '../assets/new.png';
+import creditsIcon from '../assets/credits.png';
+import telefonoIcon from '../assets/Icons/Telefono.png';
+import correoIcon from '../assets/Icons/Correo.png';
+import ubicacionIcon from '../assets/Icons/Ubicacion.png';
+import casaIcon from '../assets/Icons/Casa.png';
 import { startTour } from './OnboardingTour';
+
+const contactIcons = {
+    telefono: telefonoIcon,
+    email: correoIcon,
+    ubicacion: ubicacionIcon,
+    direccion: casaIcon
+};
 
 // --- Componente rehusable para Botones de Acción (Añadir/Eliminar) ---
 const handleDownloadPDF = async () => {
@@ -131,7 +144,7 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
                         style={{
                             width: "100%",
                             height: "260px",
-                            backgroundImage: `url(${personal.foto || "/src/assets/Yo.jpg"})`,
+                            backgroundImage: `url(${personal.foto || ""})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             cursor: "pointer"
@@ -183,14 +196,7 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
             {['telefono', 'email', 'ubicacion', 'direccion'].map(field => (
                 <div key={field} className="item-contact">
                     <img
-                        src={`/src/assets/Icons/${field === 'telefono'
-                            ? 'Telefono'
-                            : field === 'email'
-                                ? 'Correo'
-                                : field === 'ubicacion'
-                                    ? 'Ubicacion'
-                                    : 'Casa'
-                            }.png`}
+                        src={contactIcons[field]}
                         alt={field}
                     />
                     <span
@@ -629,7 +635,7 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                             });
                         }}
                     >
-                        <img src="/src/assets/new.png" alt="" />
+                        <img src={newIcon} alt="" />
                     </button>
                     <span className="tooltip">Empezar desde cero</span>
                     </div>
@@ -725,7 +731,7 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                             onClick={handleBuyCredits}
                             style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                         >
-                            <img src="/src/assets/credits.png" alt="creditos" />
+                            <img src={creditsIcon} alt="creditos" />
                         </button>
                         <span className="tooltip">Comprar créditos</span>
                     </div>
