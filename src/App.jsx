@@ -9,6 +9,8 @@ import { AuthProvider } from "./context/AuthContext";
 import AdminLogin from "./admin/AdminLogin";
 import AdminPanel from "./admin/AdminPanel";
 import AdminRoute from "./admin/routes/AdminRoute";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
     const [isMobileDevice, setIsMobileDevice] = useState(false);
@@ -93,40 +95,44 @@ function App() {
     }
 
     return (
-        <AuthProvider>
-            <Routes>
+        <>
+            <AuthProvider>
+                <Routes>
 
-                {/* Unified Auth Page (Login & Register with slider animation) */}
-                <Route path="/login" element={<Auth />} />
-                <Route path="/register" element={<Auth />} />
+                    {/* Unified Auth Page (Login & Register with slider animation) */}
+                    <Route path="/login" element={<Auth />} />
+                    <Route path="/register" element={<Auth />} />
 
-                {/* Panel normal protegido */}
-                <Route
-                    path="/cv"
-                    element={
-                        <PrivateRoute>
-                            <CVBuilder />
-                        </PrivateRoute>
-                    }
-                />
+                    {/* Panel normal protegido */}
+                    <Route
+                        path="/cv"
+                        element={
+                            <PrivateRoute>
+                                <CVBuilder />
+                            </PrivateRoute>
+                        }
+                    />
 
-                {/* 🟦 ADMIN LOGIN */}
-                <Route path="/admin" element={<AdminLogin />} />
+                    {/* 🟦 ADMIN LOGIN */}
+                    <Route path="/admin" element={<AdminLogin />} />
 
-                {/* 🟩 ADMIN PANEL (Protegido) */}
-                <Route
-                    path="/admin/panel"
-                    element={
-                        <AdminRoute>
-                            <AdminPanel />
-                        </AdminRoute>
-                    }
-                />
+                    {/* 🟩 ADMIN PANEL (Protegido) */}
+                    <Route
+                        path="/admin/panel"
+                        element={
+                            <AdminRoute>
+                                <AdminPanel />
+                            </AdminRoute>
+                        }
+                    />
 
-                {/* Redirección por defecto */}
-                <Route path="*" element={<Navigate to="/login" replace />} />
-            </Routes>
-        </AuthProvider>
+                    {/* Redirección por defecto */}
+                    <Route path="*" element={<Navigate to="/login" replace />} />
+                </Routes>
+            </AuthProvider>
+            <Analytics />
+            <SpeedInsights />
+        </>
     );
 }
 
